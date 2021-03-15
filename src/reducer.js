@@ -1,7 +1,8 @@
-// store: array of bug JS objects
+// store: [{bug objects w/ id, description, resolved}]
+// action: {type, payload:{}}
 let lastId = 0;
 
-function reducer(state = [], action) {
+export default function reducer(state = [], action) {
   if (action.type === "bugAdded") {
     return [
       ...state,

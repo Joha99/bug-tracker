@@ -1,23 +1,45 @@
-import * as actions from "./actionTypes";
+// ACTION TYPES
+//////////////////////////////////////////
+const BUG_ADDED = "bugAdded";
+const BUG_REMOVED = "bugRemoved";
+const BUG_RESOLVED = "bugResolved";
 
-// store: [{bug objects w/ id, description, resolved}]
-// action: {type, payload:{}}
+// ACTION CREATORS
+//////////////////////////////////////////
+export const bugAdded = (description) => ({
+  type: BUG_ADDED,
+  payload: {
+    description: description,
+  },
+});
+
+export const bugResolved = (id) => ({
+  type: BUG_RESOLVED,
+  payload: {
+    id,
+  },
+});
+
+// REDUCER
+//////////////////////////////////////////
 let lastId = 0;
 
 export default function reducer(state = [], action) {
   switch (action.type) {
-    case actions.BUG_ADDED:
+    case BUG_ADDED:
       return [
         ...state,
         {
-          id: ++lastId,
+          id: lastId++,
           description: action.payload.description,
           resolved: false,
         },
       ];
-    case actions.BUG_REMOVED:
+
+    case BUG_REMOVED:
       return state.filter((bug) => bug.id !== action.payload.id);
-    case actions.BUG_RESOLVED:
+
+    case BUG_RESOLVED:
       return state.map((bug) => {
         if (bug.id === action.payload.id) {
           // create a copy of the bug instance rather than changing the bug itself
@@ -28,6 +50,7 @@ export default function reducer(state = [], action) {
         }
         return bug;
       });
+
     default:
       return state;
   }

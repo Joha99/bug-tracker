@@ -3,7 +3,7 @@ import store from "./store";
 console.log(store);
 
 // subscribe to store to detect changes
-store.subscribe(() => {
+const unsubscribe = store.subscribe(() => {
   console.log("Store changed", store.getState());
 }); 
 
@@ -15,8 +15,6 @@ store.dispatch({
   },
 });
 
-console.log(store.getState());
-
 store.dispatch({
   type: "bugRemoved",
   payload: {
@@ -24,4 +22,4 @@ store.dispatch({
   },
 });
 
-console.log(store.getState());
+unsubscribe(); 

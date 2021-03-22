@@ -20,9 +20,13 @@ export default function reducer(state = [], action) {
     case actions.BUG_RESOLVED:
       return state.map((bug) => {
         if (bug.id === action.payload.id) {
-          bug.resolved = true;
-          return bug;
+          // create a copy of the bug instance rather than changing the bug itself
+          return {
+            ...bug,
+            resolved: true,
+          };
         }
+        return bug;
       });
     default:
       return state;

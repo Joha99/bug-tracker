@@ -4,7 +4,7 @@ export function bugAdded(description) {
   return {
     type: actions.BUG_ADDED,
     payload: {
-      description: "bug-1",
+      description: description,
     },
   };
 }
@@ -12,6 +12,6 @@ export function bugAdded(description) {
 export const bugResolved = (id) => ({
   type: actions.BUG_RESOLVED,
   payload: {
-    id: id,
+    id,
   },
 });

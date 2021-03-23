@@ -1,24 +1,10 @@
-// ACTION TYPES
-//////////////////////////////////////////
-const BUG_ADDED = "bugAdded";
-const BUG_REMOVED = "bugRemoved";
-const BUG_RESOLVED = "bugResolved";
+import { createAction } from "@reduxjs/toolkit";
 
 // ACTION CREATORS
 //////////////////////////////////////////
-export const bugAdded = (description) => ({
-  type: BUG_ADDED,
-  payload: {
-    description: description,
-  },
-});
-
-export const bugResolved = (id) => ({
-  type: BUG_RESOLVED,
-  payload: {
-    id,
-  },
-});
+export const bugAdded = createAction("bugAdded");
+export const bugResolved = createAction("bugResolved");
+export const bugRemoved = createAction("bugRemoved");
 
 // REDUCER
 //////////////////////////////////////////
@@ -26,7 +12,7 @@ let lastId = 0;
 
 export default function reducer(state = [], action) {
   switch (action.type) {
-    case BUG_ADDED:
+    case bugAdded.type:
       return [
         ...state,
         {
@@ -36,10 +22,10 @@ export default function reducer(state = [], action) {
         },
       ];
 
-    case BUG_REMOVED:
+    case bugRemoved.type:
       return state.filter((bug) => bug.id !== action.payload.id);
 
-    case BUG_RESOLVED:
+    case bugResolved.type:
       return state.map((bug) => {
         if (bug.id === action.payload.id) {
           // create a copy of the bug instance rather than changing the bug itself

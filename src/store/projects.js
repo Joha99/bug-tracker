@@ -10,7 +10,7 @@ const projectSlice = createSlice({
   initialState: initialState,
   reducers: {
     projectAdded: (state, action) => {
-      state.push({ id: ++lastId, description: action.payload.description });
+      state.push({ id: ++lastId, name: action.payload.name });
     },
   },
 });

@@ -1,8 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import projectsReducer from "./projects";
-import bugsReducer from "./bugs";
+import entitiesReducer from "./entities";
 
 export default combineReducers({
-  bugs: bugsReducer,
-  projects: projectsReducer,
+  entities: entitiesReducer,
 });

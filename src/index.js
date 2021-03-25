@@ -1,9 +1,15 @@
 import configureStore from "./store/configureStore";
-import { bugAdded, bugResolved, unresolvedBugsSelector } from "./store/bugs";
+import {
+  bugAdded,
+  bugResolved,
+  bugAssignedToUser,
+  getUnresolvedBugs,
+  getBugsByUser,
+} from "./store/bugs";
 import { projectAdded } from "./store/projects";
+import { userAdded } from "./store/users";
 
 const store = configureStore();
-console.log(store);
 
 // subscribe to store to detect changes
 const unsubscribe = store.subscribe(() => {
@@ -12,13 +18,16 @@ const unsubscribe = store.subscribe(() => {
 
 // dispatch actions to store
 store.dispatch(bugAdded({ description: "Bug 1" }));
-store.dispatch(bugAdded({ description: "Bug 2" }));
-store.dispatch(bugAdded({ description: "Bug 3" }));
 store.dispatch(bugResolved({ id: 1 }));
 store.dispatch(projectAdded({ name: "Project 1" }));
+store.dispatch(userAdded({ name: "User 1" }));
+store.dispatch(userAdded({ name: "User 2" }));
+store.dispatch(bugAssignedToUser({ bugId: 1, userId: 2 }));
 
-const x = unresolvedBugsSelector(store.getState());
-const y = unresolvedBugsSelector(store.getState());
-console.log(x === y);
+const getBugsAssignedToUser2 = getBugsByUser(2);
+console.log(
+  "Bugs assigned to User 2: ",
+  getBugsAssignedToUser2(store.getState())
+);
 
 unsubscribe();

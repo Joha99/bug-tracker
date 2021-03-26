@@ -16,18 +16,14 @@ const unsubscribe = store.subscribe(() => {
   console.log("Store changed!", store.getState());
 });
 
-// dispatch actions to store
-store.dispatch(bugAdded({ description: "Bug 1" }));
-store.dispatch(bugResolved({ id: 1 }));
-store.dispatch(projectAdded({ name: "Project 1" }));
-store.dispatch(userAdded({ name: "User 1" }));
-store.dispatch(userAdded({ name: "User 2" }));
-store.dispatch(bugAssignedToUser({ bugId: 1, userId: 2 }));
+// dispatch functions
+store.dispatch((dispatch, getState) => {
+  // call an API
+  // when promise is resolved, dispatch()
+  dispatch({ type: "bugReceived", bugs: [1, 2, 3] });
+  // if promise is rejected, dispatch()
+});
 
-const getBugsAssignedToUser2 = getBugsByUser(2);
-console.log(
-  "Bugs assigned to User 2: ",
-  getBugsAssignedToUser2(store.getState())
-);
+store.dispatch({ type: "error", payload: { message: "An error occurred." } });
 
 unsubscribe();

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const action = {
   type: "apiCallBegan",
   payload: {
@@ -10,14 +12,29 @@ const action = {
 };
 
 // handle actions that make api calls
-const api = (store) => (next) => (action) => {
+const api = (dispatch, getState) => (next) => (action) => {
   if (action.type !== "apiCallBegan") {
-    return next(action); 
-  } 
+    return next(action);
+  }
 
-  // make api call 
+  const { url, method, data, onSuccess, onError } = action.payload;
 
-  // handle success and error cases 
+  // make api call
+  axios
+    .request({
+      baseURL: "http://localhost:9001/api",
+      url,
+      method,
+      data,
+    })
+    .then(() => {
+      // handle success
+      dispatch({ type: onSuccess, payload: data });
+    })
+    .catch(() => {
+      // handle error
+      dispatch({ type: onError });
+    });
 };
 
 export default api;

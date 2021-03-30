@@ -16,14 +16,15 @@ const unsubscribe = store.subscribe(() => {
   console.log("Store changed!", store.getState());
 });
 
-// dispatch functions
-store.dispatch((dispatch, getState) => {
-  // call an API
-  // when promise is resolved, dispatch()
-  dispatch({ type: "bugReceived", bugs: [1, 2, 3] });
-  // if promise is rejected, dispatch()
-});
+const action = {
+  type: "apiCallBegan",
+  payload: {
+    url: "/bugs",
+    onSuccess: "bugsReceived",
+    onError: "apiRequestFailed",
+  },
+};
 
-store.dispatch({ type: "error", payload: { message: "An error occurred." } });
+store.dispatch(action);
 
 unsubscribe();

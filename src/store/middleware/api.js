@@ -1,18 +1,7 @@
 import axios from "axios";
 
-const action = {
-  type: "apiCallBegan",
-  payload: {
-    url: "/bugs",
-    method: "get",
-    data: {},
-    onSuccess: "bugsReceived",
-    onError: "apiRequestFailed",
-  },
-};
-
 // handle actions that make api calls
-const api = (dispatch, getState) => (next) => (action) => {
+const api = ({ dispatch }) => (next) => (action) => {
   if (action.type !== "apiCallBegan") {
     return next(action);
   }
@@ -24,16 +13,15 @@ const api = (dispatch, getState) => (next) => (action) => {
     .request({
       baseURL: "http://localhost:9001/api",
       url,
-      method,
-      data,
     })
-    .then(() => {
+    .then((res) => {
       // handle success
-      dispatch({ type: onSuccess, payload: data });
+      console.log(res.data)
+      dispatch({ type: onSuccess, payload: res.data });
     })
-    .catch(() => {
+    .catch((error) => {
       // handle error
-      dispatch({ type: onError });
+      dispatch({ type: onError, payload: error });
     });
 };
 

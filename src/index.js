@@ -8,6 +8,7 @@ import {
 } from "./store/bugs";
 import { projectAdded } from "./store/projects";
 import { userAdded } from "./store/users";
+import * as actions from "./store/api";
 
 const store = configureStore();
 
@@ -16,15 +17,7 @@ const unsubscribe = store.subscribe(() => {
   console.log("Store changed!", store.getState());
 });
 
-const action = {
-  type: "apiCallBegan",
-  payload: {
-    url: "/bugs",
-    onSuccess: "bugsReceived",
-    onError: "apiRequestFailed",
-  },
-};
-
-store.dispatch(action);
+store.dispatch(actions.apiCallBegan({ url: "/bugs" }));
+store.dispatch(actions.apiCallBegan({ url: "/bugss" }));
 
 unsubscribe();
